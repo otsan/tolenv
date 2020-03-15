@@ -2,46 +2,46 @@
 
 ![tolenv_banner](docs/tolenv_banner.png)
 
-Dockerを使って様々な環境に対応したtolsetです。
+A tolset that supports various environments using Docker.
 
-川合秀実氏著「30日でできる！OS自作入門」の内容と、Cやアセンブリのソースレベルで互換性がありますが、Makefileは一部書き換える必要があります。書き換え方法についてはドキュメントを作成する予定です。
+It is compatible at the source level of C and assembly with the contents of "In 30 days! OS self-made introduction" written by Hidemi Kawai, but the Makefile needs to be partially rewritten. We will create a document on how to rewrite.
 
-最終日のharib27fを、本tolenvに合わせて書き換えたものを[HariboteOS/harib27f](https://github.com/HariboteOS/harib27f)として公開していますので、こちらも参考になさってください。
+Harib27f on the last day, rewritten to match this tolenv[HariboteOS/harib27f](https://github.com/HariboteOS/harib27f)Please refer to this as it is open to the public.
 
-## 事前準備
+## preparation
 
-以下のものをインストールしておく必要があります。
+The following must be installed:
 
 - [Docker](https://www.docker.com/get-started)
 - [QEMU](https://www.qemu.org)
-  - エミュレーション機能が不要な場合はインストール不要です
+  - No installation required if emulation function is not required
   
-## 環境チェック
+## Environmental check
 
-以下のようにコマンドを実行した際にバージョン情報が出ていればOKです（以下の出力は検証済みの環境のもので、実際には多少異なる場合があります）。
+It is OK if the version information comes out when you execute the command as follows (the output below is from a verified environment, it may be slightly different).
 
 ```
 $ docker --version
 Docker version 19.03.5, build 633a0ea
 ```
-## ダウンロードと展開
+## Download and unpack
 
-本リポジトリをcloneするか、zipファイルとしてダウンロードして展開します。このドキュメント(`README.md`)がある階層をプロジェクトルートとして以下は説明します。
+Clone this repository or download and extract it as a zip file. The hierarchy where this document (`README.md`) is located is described below as the project root.
 
-- / プロジェクトルート
+- / Project root
   - Makefile
   - README.md
   - harib27f/
   - z_tools/
   - z_tools_linux/
   
-## Dockerイメージの取得
-開発ツールを実行するために必要なDockerのイメージを取得します。この手順は、リポジトリをcloneもしくはダウンロードした後に一度だけ行えば十分です。何度実行しても害はありません。
+## Get Docker image
+Get the Docker image needed to run the development tools. This step only needs to be done once after cloning or downloading the repository. There is no harm in running it many times.
 
-* ターミナルを開き、プロジェクトルートへcdする
+* Open a terminal and `cd` to the project root
 * `make pull`
 
-実行結果のサンプルはこんな感じです。
+The sample of the execution result looks like this.
 
 ```
 $ make pull
@@ -58,7 +58,7 @@ Status: Downloaded newer image for hikalium/ubuntu-with-libc-i386:latest
 docker.io/hikalium/ubuntu-with-libc-i386:latest
 ```
 
-すでにimageのpullが完了していれば以下のような出力が得られます。
+If the image has already been pulled, you will get the following output:
 
 ```
 $ make pull
@@ -69,14 +69,14 @@ Status: Image is up to date for hikalium/ubuntu-with-libc-i386:latest
 docker.io/hikalium/ubuntu-with-libc-i386:latest
 ```
 
-## 開発環境の立ち上げ
+## Launch development environment
 
-この手順は、初回だけでなく、`make down`したり、コンピューターを再起動した場合は毎回行う必要があります。（ビルドに使うdockerのコンテナを起動します。）
+You need to do this not only the first time, but every time you make down or restart your computer. (Launch the docker container used for the build.)
 
-* ターミナルを開き、プロジェクトルートへcdする
+* Open a terminal and `cd` to the project root
 * `make up`
 
-実行結果のサンプルはこんな感じです。
+The sample of the execution result looks like this.
 
 ```
 $ make up
@@ -84,25 +84,25 @@ b4d30d8e4c788a2f046eadf5417eec607f130504f4da512b3cc12dc5e068a869
 OK!
 ```
 
-すでにupしていた場合は以下のような応答が返ってきます。
+If it has already been up, the following response will be returned.
 
 ```
 $ make up
 Already up
 ```
 
-## 開発
+## development
 
-'z_tools/'と同じ階層にはりぼてOSのフォルダ(ex: `harib27f`)を作成して、そこで通常通り開発してください。川合秀実氏著「30日でできる！OS自作入門」の本で解説されている内容と、Cやアセンブリのソースレベルで互換性がありますが、Makefileは一部書き換える必要があります。書き換え方法についてはドキュメントを作成する予定です。
+Create an OS folder (ex: `harib27f`) in the same hierarchy as 'z_tools /', and develop there as usual. Although it is compatible at the source level of C and assembly with the contents described in the book of Hidemi Kawai's "You can do it in 30 days! Introduction to OS self-made", Makefile needs to be partially rewritten. We will create a document on how to rewrite.
 
-## 開発環境の終了
+## Termination development environment
 
-作業が終わってdockerのコンテナを止めたい場合は以下の手順を実行します。
+If you want to stop the docker container after work is completed, perform the following procedure.
 
-* ターミナルを開き、プロジェクトルートへcdする
+* Open a terminal and `cd` to the project root
 * `make down`
 
-実行結果のサンプルはこんな感じです。
+The sample of the execution result looks like this.
 
 ```
 $ make down
@@ -111,7 +111,7 @@ tolenv
 tolenv container deleted
 ```
 
-すでにdownしていた場合は以下のような応答が返ってきます。
+If it has already been down, the following response will be returned.
 
 ```
 $ make down
@@ -119,8 +119,8 @@ Error response from daemon: No such container: tolenv
 Already down
 ```
 
-# 謝辞
-プロジェクトのアイコンについては、hideyosiさんの[KaOS素材集](http://osask.hideyosi.com/kaos/kaos.html)よりダウンロードしたものを、KL-01ライセンスの下、改変して使用しています。
+# thank
+About the icon of the project, the one downloaded from hideyosi's [KaOS material collection] (http://osask.hideyosi.com/kaos/kaos.html) is modified and used under the KL-01 license. You.
 
-# ライセンス
+# license
 MIT License
